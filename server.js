@@ -16,6 +16,21 @@ app.use("/public", express.static(process.cwd() + "/public"));
 
 app.use(cors({ origin: "*" })); //For FCC testing purposes only
 
+// Setting the content security policies
+app.use(
+  helmet({
+    frameguard: {
+      action: 'deny'
+    },
+    contentSecurityPolicy: {
+      directives : {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"]
+      }
+    }
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -36,13 +51,14 @@ app.use(function (req, res, next) {
 });
 
 //Start our server and tests!
-const listener = app.listen(process.env.PORT || 3000, function () {
+const listener = app.listen(process.env.PORT || 5000, function () {
   console.log("Your app is listening on port " + listener.address().port);
   if (process.env.NODE_ENV === "test") {
     console.log("Running Tests...");
     setTimeout(function () {
       try {
         runner.run();
+        // app.listen()
       } catch (e) {
         console.log("Tests are not valid:");
         console.error(e);
@@ -51,14 +67,5 @@ const listener = app.listen(process.env.PORT || 3000, function () {
   }
 });
 
-// Setting the content security policies
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["self"],
-      scriptSrc: ["self"],
-    },
-  },
-}));
 
 module.exports = app; //for testing
