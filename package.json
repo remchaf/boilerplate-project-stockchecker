@@ -4,7 +4,7 @@
   "description": "InfoSec project for freeCodeCamp",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js ; cd C:\\Program Files\\MongoDB\\Server\\4.2\bin ; mongo ; use freeCodeCamp ; db.stocks.remove( { } )"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

@@ -18,15 +18,10 @@ app.use(cors({ origin: "*" })); //For FCC testing purposes only
 
 // Setting the content security policies
 app.use(
-  helmet({
-    frameguard: {
-      action: 'deny'
-    },
-    contentSecurityPolicy: {
-      directives : {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'"]
-      }
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
     }
   })
 );
@@ -66,6 +61,5 @@ const listener = app.listen(process.env.PORT || 5000, function () {
     }, 3500);
   }
 });
-
 
 module.exports = app; //for testing
